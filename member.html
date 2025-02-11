@@ -1,7 +1,7 @@
 <section class="flex flex-row p-3">
   <button type="button" class="ml-auto ps-2 flex flex-wrap items-center text-base justify-center" data-modal-target="new-member-modal" data-modal-toggle="new-member-modal">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" class="w-6 h-6 fill-blue-500">
-      <path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512l293.1 0c-3.1-8.8-3.7-18.4-1.4-27.8l15-60.1c2.8-11.3 8.6-21.5 16.8-29.7l40.3-40.3c-32.1-31-75.7-50.1-123.9-50.1l-91.4 0zm435.5-68.3c-15.6-15.6-40.9-15.6-56.6 0l-29.4 29.4 71 71 29.4-29.4c15.6-15.6 15.6-40.9 0-56.6l-14.4-14.4zM375.9 417c-4.1 4.1-7 9.2-8.4 14.9l-15 60.1c-1.4 5.5 .2 11.2 4.2 15.2s9.7 5.6 15.2 4.2l60.1-15c5.6-1.4 10.8-4.3 14.9-8.4L576.1 358.7l-71-71L375.9 417z"/>
+      <path d="M96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM0 482.3C0 383.8 79.8 304 178.3 304l91.4 0C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7L29.7 512C13.3 512 0 498.7 0 482.3zM504 312l0-64-64 0c-13.3 0-24-10.7-24-24s10.7-24 24-24l64 0 0-64c0-13.3 10.7-24 24-24s24 10.7 24 24l0 64 64 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-64 0 0 64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"/>
     </svg>
   </button>
 </section>
@@ -13,17 +13,17 @@
         <th scope="col" class="p-4">
           <!-- チェックボックスの列を確保 -->
         </th>
-        <th scope="col" class="px-4 py-3">
+        <th scope="col" class="px-2 py-3">
           Number
         </th>
-        <th scope="col" class="px-4 py-3">
+        <th scope="col" class="px-3 py-3">
           Name
         </th>
-        <th scope="col" class="px-4 py-3">
+        <th scope="col" class="px-2 py-3">
           Permission
         </th>
-        <th scope="col" class="px-4 py-3">
-          Status
+        <th scope="col" class="px-2 py-3">
+          Edit
         </th>
       </tr>
     </thead>
@@ -57,7 +57,7 @@
                         <label for="new-member-identification-number" class="block mb-2 text-sm font-medium text-gray-900">
                           固有学籍番号
                         </label>
-                        <input type="number" id="new-member-identification-number" class="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="6桁の番号(例.220101)を入力" min="999999" required />
+                        <input type="number" id="new-member-identification-number" class="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="6桁の学籍番号(例.220101)を入力" min="999999" required />
                     </div>
                     <div class="col-span-2">
                         <label for="new-member-name" class="block mb-2 text-sm font-medium text-gray-900">
@@ -126,7 +126,7 @@
 
                   const td_number_element = document.createElement("td");
                   td_number_element.textContent = member_list.member[i][0];
-                  td_number_element.setAttribute("class", "px-4 py-4");
+                  td_number_element.setAttribute("class", "px-2 py-4");
                   tr_element.appendChild(td_number_element);
                   
                   const div_wrap_name_and_email_element = document.createElement("div");
@@ -146,25 +146,18 @@
 
                   const td_permission_element = document.createElement("td");
                   td_permission_element.textContent = member_list.member[i][2];
-                  td_permission_element.setAttribute("class", "px-4 py-4");
+                  td_permission_element.setAttribute("class", "px-2 py-4");
                   tr_element.appendChild(td_permission_element);
 
-                  const td_online_circle_element = document.createElement("td");
-                  td_online_circle_element.setAttribute("class", "px-4 py-4");
+                  const td_wrap_edit_element = document.createElement("td");
+                  td_wrap_edit_element.setAttribute("class", "px-2 py-4")
 
-                  const div_wrap_online_circle_element = document.createElement("div");
-                  div_wrap_online_circle_element.setAttribute("class", "flex items-center");
-
-                  const div_online_circle_element = document.createElement("div");
-                  div_online_circle_element.setAttribute("class", "h-2.5 w-2.5 rounded-full bg-green-500 me-2");
-                  div_wrap_online_circle_element.appendChild(div_online_circle_element);
-
-                  const span_online_element = document.createElement("span");
-                  span_online_element.textContent = "Online";
-                  div_wrap_online_circle_element.appendChild(span_online_element);
-
-                  td_online_circle_element.appendChild(div_wrap_online_circle_element);
-                  tr_element.appendChild(td_online_circle_element);
+                  const i_user_edit_element = document.createElement("i");
+                  i_user_edit_element.setAttribute("class", "fa-solid fa-user-pen");
+                  i_user_edit_element.setAttribute("onclick", `memberInfoUpdate("${member_list.member[i][1]}")`);
+                  i_user_edit_element.setAttribute("style", "color: var(--color-blue-500);");
+                  td_wrap_edit_element.appendChild(i_user_edit_element);
+                  tr_element.appendChild(td_wrap_edit_element);
 
                   member_list_table_element.appendChild(tr_element);
               };
@@ -209,5 +202,9 @@
       } catch(e) {
           openModal("status_modal", arguments.callee.name, "error", e.message);
       }
+  }
+
+  function memberInfoUpdate(user_origin_number) {
+      console.log(user_origin_number)
   }
 </script>
