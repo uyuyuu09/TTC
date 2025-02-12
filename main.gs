@@ -427,40 +427,8 @@ function dailyFunctions() {
 
 function test() {
     // getRange(行番号, 列番号, 行数, 列数)
-    // const ss = SpreadsheetApp.getActiveSpreadsheet();
-    // const master_data = ss.getSheetByName("master");
-    // const schedule_sheet = ss.getSheetByName("schedule");
-    // const absence_sheet = ss.getSheetByName("absence");
-  const ss = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("schedule");
-  const schedule_list = ss.getDataRange().getValues().slice(1);
-  let tommorow_elm = new Date();
-  tommorow_elm.setDate(tommorow_elm.getDate() + 1);
-
-  const [
-      tommorow_year,
-      tommorow_month,
-      tommorow_date
-  ] = [
-      String(tommorow_elm.getFullYear()).padStart(2, "0"),
-      String(tommorow_elm.getMonth() + 1).padStart(2, "0"),
-      String(tommorow_elm.getDate()).padStart(2, "0")
-  ];
-  
-  const tommorow = (tommorow_year + "-" + tommorow_month + "-" + tommorow_date)
-
-  let msg = [];
-  for(let i = 0; i < schedule_list.length; i++) {
-      if(schedule_list[i][1].includes(tommorow)) {
-          let id = schedule_list[i][0];
-          console.log(id)
-          let detail_list = getData("schedule_detail_from_id", id);
-          let title = detail_list.schedule_detail[2];
-          let start_time = detail_list.schedule_detail[3].split("~")[0];
-          let end_time = detail_list.schedule_detail[3].split("~")[1];
-          let memo = detail_list.schedule_detail[4];
-          let absence_list = detail_list.schedule_detail[6];
-          msg = [title, start_time, end_time, memo];
-      }
-  }
-  console.log(msg)
+    const ss = SpreadsheetApp.getActiveSpreadsheet();
+    const master_data = ss.getSheetByName("master");
+    const schedule_sheet = ss.getSheetByName("schedule");
+    const absence_sheet = ss.getSheetByName("absence");
 }
