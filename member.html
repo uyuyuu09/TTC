@@ -27,7 +27,7 @@
         </th>
       </tr>
     </thead>
-    <tbody id="member_list_table"></tbody>
+    <tbody id="member-list-table"></tbody>
   </table>
 </section>
 
@@ -54,10 +54,10 @@
                         <input type="number" name="new-member-number" id="new-member-number" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="4桁の学籍番号を入力" min="1101" max="3850" required />
                     </div>
                     <div class="col-span-2">
-                        <label for="new-member-identification-number" class="block mb-2 text-sm font-medium text-gray-900">
+                        <label for="new-member-origin-number" class="block mb-2 text-sm font-medium text-gray-900">
                           固有学籍番号
                         </label>
-                        <input type="number" id="new-member-identification-number" class="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="6桁の学籍番号(例.220101)を入力" min="999999" required />
+                        <input type="number" id="new-member-origin-number" class="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="6桁の学籍番号(例.220101)を入力" min="999999" required />
                     </div>
                     <div class="col-span-2">
                         <label for="new-member-name" class="block mb-2 text-sm font-medium text-gray-900">
@@ -85,14 +85,70 @@
     </div>
 </div>
 
+<button type="button" class="hidden" data-modal-target="edit-member-modal" data-modal-toggle="edit-member-modal"></button>
+
+<div id="edit-member-modal" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    <div class="relative p-4 w-full max-w-md max-h-full">
+        <div class="relative bg-white rounded-lg shadow-sm">
+            <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t border-gray-200">
+                <h3 class="text-lg font-semibold text-gray-900">
+                    部員情報参照・更新
+                </h3>
+                <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center" data-modal-toggle="edit-member-modal">
+                    <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                    </svg>
+                    <span class="sr-only">Close modal</span>
+                </button>
+            </div>
+            <section class="p-4 md:p-5">
+                <div class="grid gap-4 mb-4 grid-cols-2">
+                    <div class="col-span-2">
+                        <label for="edit-member-number" class="block mb-2 text-sm font-medium text-gray-900">
+                          学籍番号
+                        </label>
+                        <input type="number" name="edit-member-number" id="edit-member-number" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="4桁の学籍番号を入力" min="1101" max="3850" required />
+                    </div>
+                    <div class="col-span-2">
+                        <label for="edit-member-origin-number" class="block mb-2 text-sm font-medium text-gray-900">
+                          固有学籍番号
+                        </label>
+                        <input type="number" id="edit-member-origin-number" class="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="6桁の学籍番号(例.220101)を入力" min="999999" required />
+                    </div>
+                    <div class="col-span-2">
+                        <label for="edit-member-name" class="block mb-2 text-sm font-medium text-gray-900">
+                          氏名
+                        </label>
+                        <input type="text" name="edit-member-name" id="edit-member-name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="氏名を入力(姓と名は半角数字で空ける)" required />
+                    </div>
+                    <div class="col-span-2">
+                        <label for="edit-member-permission" class="block mb-2 text-sm font-medium text-gray-900">
+                          権限
+                        </label>
+                        <select id="edit-member-permission" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                            <option value="">権限を選択</option>
+                            <option value="normal">normal(デフォルト)</option>
+                            <option value="teacher">teacher(顧問)</option>
+                            <option value="admin">admin(本アプリの管理者権限)</option>
+                        </select>
+                    </div>
+                </div>
+                <button onclick="sendUpdateMember()" id="send-edit-member-button" class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                    更新
+                </button>
+            </section>
+        </div>
+    </div>
+</div>
+
 <script>
-  function set_member_list(member_list) {
+  function setMemberList(member_list) {
       if(member_list.status !== "200 ok") {
-          openModal("status_modal", arguments.callee.name, "error", member_list.status);
+          openModal("status-modal", arguments.callee.name, "error", member_list.status);
           return;
       } else {
           try {
-              const member_list_table_element = document.getElementById("member_list_table");
+              const member_list_table_element = document.getElementById("member-list-table");
               member_list_table_element.innerHTML = "";
 
               for(let i = 0; i < member_list.member.length; i++) {
@@ -154,7 +210,7 @@
 
                   const i_user_edit_element = document.createElement("i");
                   i_user_edit_element.setAttribute("class", "fa-solid fa-user-pen");
-                  i_user_edit_element.setAttribute("onclick", `memberInfoUpdate("${member_list.member[i][1]}")`);
+                  i_user_edit_element.setAttribute("onclick", `callMemberEditor('${member_list.member[i][1]}')`);
                   i_user_edit_element.setAttribute("style", "color: var(--color-blue-500);");
                   td_wrap_edit_element.appendChild(i_user_edit_element);
                   tr_element.appendChild(td_wrap_edit_element);
@@ -162,7 +218,7 @@
                   member_list_table_element.appendChild(tr_element);
               };
           } catch(e) {
-              openModal("status_modal", arguments.callee.name, "error", e.message);
+              openModal("status-modal", arguments.callee.name, "error", e.message);
           }
       }
   }
@@ -178,19 +234,18 @@
               new_member_email
           ] = [
               String(document.getElementById("new-member-number").value),
-              String(document.getElementById("new-member-identification-number").value),
+              String(document.getElementById("new-member-origin-number").value),
               String(document.getElementById("new-member-permission").value),
               String(document.getElementById("new-member-name").value),
-              String(document.getElementById("new-member-identification-number").value + "@oks.city-saitama.ed.jp")
+              String(document.getElementById("new-member-origin-number").value + "@oks.city-saitama.ed.jp")
           ];
           google.script.run.withSuccessHandler(function() {
               document.getElementById("new-member-number").value = "";
-              document.getElementById("new-member-identification-number").value = "";
+              document.getElementById("new-member-origin-number").value = "";
               document.getElementById("new-member-permission").value = "";
               document.getElementById("new-member-name").value = "";
-              document.getElementById("new-member-identification-number").value = "";
               closeModal("new-member-modal");
-              openModal("status_modal", "新規部員登録", "success");
+              openModal("status-modal", "新規部員登録", "success");
           }).sendData(
               "add_member_list",
               new_member_number,
@@ -200,11 +255,77 @@
               new_member_email
           );
       } catch(e) {
-          openModal("status_modal", arguments.callee.name, "error", e.message);
+          openModal("status-modal", arguments.callee.name, "error", e.message);
       }
   }
 
-  function memberInfoUpdate(user_origin_number) {
-      console.log(user_origin_number)
+  function callMemberEditor(user_origin_number) {
+      openModal("edit-member-modal");
+      document.getElementById("edit-member-number").value = "";
+      document.getElementById("edit-member-origin-number").value = "";
+      document.getElementById("edit-member-name").value = "";
+      document.getElementById("edit-member-permission").value = "";
+      document.getElementById("send-edit-member-button").innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+      google.script.run.withSuccessHandler(showMemberEditor).getData("member_from_origin_number", user_origin_number);
   }
+
+  function showMemberEditor(member) {
+      if(member.status !== "200 ok") {
+          openModal("status-modal", arguments.callee.name, "error", member.status);
+          return;
+      } else {
+          try {
+              document.getElementById("edit-member-number").value = member.member_info[0];
+              document.getElementById("edit-member-origin-number").value = member.member_info[1];
+              document.getElementById("edit-member-name").value = member.member_info[3];
+              document.getElementById("edit-member-permission").value = member.member_info[2];
+              document.getElementById("send-edit-member-button").innerHTML = '更新';
+          } catch(e) {
+              closeModal("edit-member-modal");
+              openModal("status", arguments.callee.name, "error", e.message);
+          }
+      }
+  }
+
+  function sendUpdateMember() {
+      try {
+          document.getElementById("send-edit-member-button").innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+          const [
+              update_member_number,
+              update_member_identification_number,
+              update_member_permission,
+              update_member_name,
+              update_member_email
+          ] = [
+              String(document.getElementById("edit-member-number").value),
+              String(document.getElementById("edit-member-origin-number").value),
+              String(document.getElementById("edit-member-permission").value),
+              String(document.getElementById("edit-member-name").value),
+              String(document.getElementById("edit-member-origin-number").value + "@oks.city-saitama.ed.jp")
+          ];
+          google.script.run.withSuccessHandler(function() {
+              document.getElementById("edit-member-number").value = "";
+              document.getElementById("edit-member-origin-number").value = "";
+              document.getElementById("edit-member-permission").value = "";
+              document.getElementById("edit-member-name").value = "";
+              closeModal("edit-member-modal");
+              openModal("status-modal", "部員情報更新", "success");
+          }).sendData(
+              "member_update",
+              update_member_number,
+              update_member_identification_number,
+              update_member_permission,
+              update_member_name,
+              update_member_email
+          );
+      } catch(e) {
+          openModal("status-modal", arguments.callee.name, "error", e.message);
+      }
+  }
+
+      // document.getElementById("edit-member-number").value = "";
+      // document.getElementById("edit-member-origin-number").value = "";
+      // document.getElementById("edit-member-permission").value = "";
+      // document.getElementById("edit-member-name").value = "";
+      // document.getElementById("edit-member-origin-number").value = "";
 </script>
