@@ -277,6 +277,19 @@ function sendData() {
             ]]);
             setFormat("schedule", "A2:F", "@");
             return;
+        case "delete_schedule":
+            schedule_list = schedule_sheet.getDataRange().getValues().slice(1);
+            delete_target = [];
+            for(let i = 0; i < schedule_list.length; i++) {
+                target = String(schedule_list[i][1]) + " " + schedule_list[i][3].split("~")[0];
+                if(new Date(target) < new Date()) {
+                    delete_target.push(i + 2);
+                }
+            };
+            for(let j = delete_target.length - 1; j >= 0; j--) {
+                schedule_sheet.deleteRow(delete_target[j])
+            }
+            return;
         case "add_new_absence":
             row = find_value_Row(master_data, Session.getActiveUser().getEmail(), 5);
             [
@@ -422,6 +435,7 @@ function sendScheduleToday() {
 function dailyFunctions() {
     sortSheetData("master", "A2:E", 0, Number);
     setFormat("schedule", "A2:F", "@");
+    sendData("delete_schedule");
     return;
 }
 
@@ -431,4 +445,5 @@ function test() {
     const master_data = ss.getSheetByName("master");
     const schedule_sheet = ss.getSheetByName("schedule");
     const absence_sheet = ss.getSheetByName("absence");
+    sendData("delete_schedule")
 }

@@ -30,7 +30,7 @@
                         </label>
                         <input type="text" name="title" id="title" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="活動内容を簡潔に入力" required />
                     </div>
-                    <div class="col-span-2 sm:col-span-1">
+                    <div class="col-span-2">
                         <label for="default-datepicker" class="block mb-2 text-sm font-medium text-gray-900">
                           日付を選択
                         </label>
@@ -110,7 +110,7 @@
                         </label>
                         <input type="text" name="detail-title" id="detail-title" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="活動内容を簡潔に入力" required />
                     </div>
-                    <div class="col-span-2 sm:col-span-1">
+                    <div class="col-span-2">
                         <label for="default-datepicker" class="block mb-2 text-sm font-medium text-gray-900">
                           日付を選択
                         </label>
@@ -220,10 +220,16 @@
       if(schedule_list.status !== "200 ok") {
           openModal("status-modal", arguments.callee.name, "error", schedule_list.status);
           return;
+      } else if(schedule_list.schedule.length === 0){
+          const schedule_list_card_element = document.getElementById("schedule_list_card");
+          const div_none_schedule_msg = document.createElement("div");
+          div_none_schedule_msg.setAttribute("class", "container px-5 mx-auto sm:text-3xl text-2xl font-medium mb-4 text-gray-900");
+          div_none_schedule_msg.textContent = "登録されている予定はありません。";
+          schedule_list_card_element.appendChild(div_none_schedule_msg);
+          return;
       } else {
           try {
               const schedule_list_card_element = document.getElementById("schedule_list_card");
-
               for(let i = 0; i < schedule_list.schedule.length; i++) {
                   const div_all_wrap_element = document.createElement("div");
                   div_all_wrap_element.setAttribute("class", "whitespace-nowrap w-5/6 mx-auto bg-white rounded-xl shadow-md overflow-hidden sm:max-w-2xl m-3");
